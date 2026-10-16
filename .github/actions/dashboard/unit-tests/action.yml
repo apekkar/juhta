@@ -1,0 +1,13 @@
+name: dashboard/unit-tests
+description: Dashboard unit tests (vitest).
+
+runs:
+  using: composite
+  steps:
+    - uses: ./.github/actions/setup-env
+      with:
+        python: "false"
+        node: "true"
+    - run: npm test
+      shell: bash
+      working-directory: dashboard

@@ -1,0 +1,477 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --text: #1c1f24;
+  --muted: #6b7280;
+  --border: #e3e6ea;
+  --accent: #2f6fed;
+  --accent-text: #ffffff;
+  --chip: #eef2fb;
+  --danger: #c2410c;
+  --radius: 12px;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111317;
+    --surface: #1a1d23;
+    --text: #e8eaed;
+    --muted: #9aa0a8;
+    --border: #2a2e36;
+    --accent: #5b8cff;
+    --chip: #232a3a;
+    --danger: #fb923c;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+
+input,
+textarea,
+button {
+  font: inherit;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+}
+input:focus,
+textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+textarea {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+button {
+  padding: 0.7rem 1.1rem;
+  border: 0;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-weight: 600;
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.error {
+  color: var(--danger);
+  margin: 0;
+}
+.muted {
+  color: var(--muted);
+}
+
+/* Login */
+.login {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+.login form {
+  width: min(24rem, 100%);
+  display: grid;
+  gap: 0.85rem;
+  padding: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 30px rgb(0 0 0 / 0.06);
+}
+.login .logo {
+  width: 5.5rem;
+  justify-self: center;
+}
+/* The logos are black on white: blend the white away, and invert them in dark mode. */
+.login .logo,
+header .brand img {
+  mix-blend-mode: multiply;
+}
+@media (prefers-color-scheme: dark) {
+  .login .logo,
+  header .brand img {
+    filter: invert(1);
+    mix-blend-mode: screen;
+  }
+}
+.login p {
+  margin: 0 0 0.5rem;
+}
+
+/* Dashboard */
+header {
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+header div {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0.9rem 1rem;
+  font-weight: 700;
+}
+header span {
+  color: var(--muted);
+  font-weight: 400;
+}
+header .brand {
+  color: inherit;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+header .brand img {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+main {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 4rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.compose {
+  display: grid;
+  gap: 0.75rem;
+}
+.compose button {
+  justify-self: end;
+}
+
+.design h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+.design .meta {
+  margin: 0.25rem 0 0.75rem;
+  font-size: 0.85rem;
+}
+.design .title {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 1rem;
+}
+.design p {
+  margin: 0.5rem 0;
+  line-height: 1.5;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.75rem 0;
+  padding: 0;
+  list-style: none;
+}
+.chips li {
+  background: var(--chip);
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.85rem;
+}
+
+.effort {
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.effort.low {
+  background: #dcfce7;
+  color: #166534;
+}
+.effort.medium {
+  background: #fef3c7;
+  color: #92400e;
+}
+.effort.high {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+details summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+details pre {
+  white-space: pre-wrap;
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 0.85rem;
+  font-size: 0.85rem;
+}
+
+.empty {
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Navigation */
+header > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sign-out {
+  background: transparent;
+  color: var(--muted);
+  padding: 0.4rem 0.8rem;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.sign-out:hover:not(:disabled) {
+  background: var(--chip);
+  color: var(--text);
+}
+
+.range {
+  display: flex;
+  gap: 0.25rem;
+}
+.range {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.toggle {
+  background: transparent;
+  color: var(--muted);
+  padding: 0.4rem 0.8rem;
+  font-weight: 500;
+}
+.toggle[aria-pressed="true"] {
+  background: var(--chip);
+  color: var(--text);
+}
+
+/* Series colour */
+:root {
+  --series-1: #2a78d6;
+  --series-muted: #c9ccd1;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --series-1: #3987e5;
+    --series-muted: #4a4f58;
+  }
+}
+/* Plan */
+.plan {
+  line-height: 1.6;
+  max-height: 36rem;
+  overflow-y: auto;
+}
+.plan h1 {
+  margin-top: 0;
+  font-size: 1.25rem;
+}
+.plan h2 {
+  margin-top: 1.75rem;
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3rem;
+}
+.plan h3 {
+  font-size: 1.05rem;
+}
+.plan code {
+  background: var(--chip);
+  border-radius: 4px;
+  padding: 0.1rem 0.3rem;
+  font-size: 0.9em;
+}
+.plan pre {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 0.85rem;
+  overflow-x: auto;
+}
+.plan pre code {
+  background: none;
+  padding: 0;
+}
+.plan a {
+  color: var(--accent);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+  gap: 0.75rem;
+  align-items: start;
+}
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.6rem;
+}
+.section-head h2 {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.section-head a {
+  color: var(--accent);
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+hr {
+  width: 100%;
+  border: 0;
+  border-top: 1px dashed var(--border);
+  margin: 0.5rem 0;
+}
+
+/* Agent cards */
+.agent .title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.agent h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+.status {
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--chip);
+  color: var(--muted);
+}
+.status.idle {
+  background: #dcfce7;
+  color: #166534;
+}
+.status.working {
+  background: #dbeafe;
+  color: #1e40af;
+}
+.status.failure {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.usage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+.usage dt {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.usage dd {
+  margin: 0;
+  font-size: 0.8rem;
+}
+.usage .figure {
+  font-size: 1.4rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.activity {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+.activity li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.activity li.failed span {
+  color: var(--danger);
+}
+
+/* Design cards */
+.badges {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  justify-content: end;
+}
+.source {
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--chip);
+  color: var(--text);
+}
+.source.daily {
+  background: var(--series-1);
+  color: #ffffff;
+}
+.plan-step {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 0 0 0.5rem;
+}
+
+/* Create issue */
+.issue {
+  margin-top: 0.75rem;
+  display: grid;
+  gap: 0.4rem;
+  justify-items: start;
+}
+.issue .toggle {
+  border: 1px solid var(--border);
+}
+.issue p {
+  margin: 0;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+}

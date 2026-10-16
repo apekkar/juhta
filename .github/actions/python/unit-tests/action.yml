@@ -1,0 +1,12 @@
+name: python/unit-tests
+description: Python unit tests (strategist/tests, coordinator/tests, coordinator_receiver/tests, cdk/tests).
+
+runs:
+  using: composite
+  steps:
+    - uses: ./.github/actions/setup-env
+      with:
+        python: "true"
+        node: "false"
+    - run: uv run pytest
+      shell: bash

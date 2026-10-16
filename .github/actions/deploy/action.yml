@@ -1,0 +1,36 @@
+name: deploy
+description: Build the dashboard and deploy all CDK stacks (one CDK app) via the GitHub OIDC deploy role.
+
+inputs:
+  aws-region:
+    required: true
+  aws-deploy-role-arn:
+    required: true
+  bedrock-model-id:
+    required: true
+  coordinator-model-id:
+    required: true
+  slack-user-id:
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: ./.github/actions/setup-env
+    # The Runtime image is linux/arm64; the runner is x64.
+    - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
+    - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+    - uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
+      with:
+        role-to-assume: ${{ inputs.aws-deploy-role-arn }}
+        aws-region: ${{ inputs.aws-region }}
+    - run: npm run build
+      shell: bash
+      working-directory: dashboard
+    - run: uv run --directory cdk npx --yes aws-cdk@latest deploy --all --require-approval never
+      shell: bash
+      env:
+        AWS_REGION: ${{ inputs.aws-region }}
+        BEDROCK_MODEL_ID: ${{ inputs.bedrock-model-id }}
+        COORDINATOR_MODEL_ID: ${{ inputs.coordinator-model-id }}
+        SLACK_USER_ID: ${{ inputs.slack-user-id }}

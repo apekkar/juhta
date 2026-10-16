@@ -1,0 +1,12 @@
+.git
+.venv
+.env
+cdk
+dashboard
+strategist/tests
+coordinator/tests
+.github
+**/__pycache__
+**/*.pyc
+.DS_Store
+worker/tests

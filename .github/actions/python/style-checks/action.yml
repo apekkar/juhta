@@ -1,0 +1,16 @@
+name: python/style-checks
+description: Python lint, format check and type check (strategist, coordinator, coordinator_receiver, cdk).
+
+runs:
+  using: composite
+  steps:
+    - uses: ./.github/actions/setup-env
+      with:
+        python: "true"
+        node: "false"
+    - run: uv run ruff check .
+      shell: bash
+    - run: uv run ruff format --check .
+      shell: bash
+    - run: uv run mypy
+      shell: bash

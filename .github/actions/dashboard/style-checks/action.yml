@@ -1,0 +1,13 @@
+name: dashboard/style-checks
+description: Biome lint + format check and TypeScript type check.
+
+runs:
+  using: composite
+  steps:
+    - uses: ./.github/actions/setup-env
+      with:
+        python: "false"
+        node: "true"
+    - run: npm run lint && npm run typecheck
+      shell: bash
+      working-directory: dashboard

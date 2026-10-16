@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "files": { "includes": ["src/**", "*.ts", "*.json", "!package-lock.json"] },
+  "formatter": { "indentStyle": "space", "indentWidth": 2, "lineWidth": 100 },
+  "linter": {
+    "rules": {
+      "preset": "recommended",
+      "style": {
+        // Non-null assertions are the fail-fast on data we own.
+        "noNonNullAssertion": "off"
+      }
+    }
+  }
+}

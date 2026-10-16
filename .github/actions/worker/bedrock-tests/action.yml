@@ -1,0 +1,28 @@
+name: worker/bedrock-tests
+description: >
+  The Worker with the real model (worker/tests/integration/test_bedrock.py): its app over HTTP, the real Bedrock model,
+  real git and the repo's checks implement a small issue. Bedrock-only role (bedrock-tests).
+
+inputs:
+  aws-region:
+    required: true
+  aws-bedrock-tests-role-arn:
+    required: true
+  model-id:
+    description: The Worker's Bedrock model (BEDROCK_MODEL_ID).
+    required: true
+
+runs:
+  using: composite
+  steps:
+    # Python and Node: the Worker runs the repo's full checks in its clone.
+    - uses: ./.github/actions/setup-env
+    - uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
+      with:
+        role-to-assume: ${{ inputs.aws-bedrock-tests-role-arn }}
+        aws-region: ${{ inputs.aws-region }}
+    - run: uv run pytest -m bedrock
+      shell: bash
+      env:
+        AWS_REGION: ${{ inputs.aws-region }}
+        BEDROCK_MODEL_ID: ${{ inputs.model-id }}

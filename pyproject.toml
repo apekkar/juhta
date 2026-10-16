@@ -1,0 +1,78 @@
+[project]
+name = "juhta"
+version = "0.1.0"
+description = "Personal AWS-native agents: Strategist on Bedrock/Strands, deployed to AgentCore"
+requires-python = ">=3.14"
+dependencies = [
+    "strands-agents>=1.57.1",
+    "bedrock-agentcore>=1.24.0",
+    "boto3>=1.43.106",
+    "pydantic>=2.13.5",
+    "aws-opentelemetry-distro>=0.21.0",
+    "fastapi>=0.142.2",
+    "uvicorn>=0.54.0",
+    "mcp>=1.30.0,<2.0.0",
+]
+
+[dependency-groups]
+cdk = [
+    "aws-cdk-lib>=2.272.0",
+    "cdk-nag>=3.0.2",
+    "constructs>=10.8.1",
+    "python-dotenv>=1.2.4",
+]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.16.9",
+    "mypy>=2.3.1",
+    "boto3-stubs[secretsmanager]>=1.43.107",
+    "httpx>=0.28.1",
+]
+
+[tool.uv]
+package = false
+default-groups = ["cdk", "dev"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+
+[tool.mypy]
+python_version = "3.14"
+strict = true
+warn_unused_ignores = true
+mypy_path = "cdk"
+files = ["strategist", "coordinator", "coordinator_receiver", "worker", "cdk"]
+exclude = ["cdk/cdk\\.out/"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W", "F",
+    "I",
+    "UP",
+    "B",
+    "SIM",
+    "ANN",           # type annotations required
+    "FBT",           # no positional boolean arguments
+    "S",
+    "T20",           # no print() — use logging
+    "PL",
+    "RUF",
+]
+
+[tool.pytest.ini_options]
+pythonpath = [".", "cdk"]
+testpaths = [
+    "strategist/tests",
+    "coordinator/tests",
+    "coordinator_receiver/tests",
+    "worker/tests/unit",
+    "worker/tests/integration",
+    "cdk/tests",
+]
+# importlib mode lets same-named test modules coexist; bedrock tests call the real model.
+addopts = "--import-mode=importlib -m 'not bedrock'"
+markers = ["bedrock: calls the real Bedrock model (worker/tests/integration/test_bedrock.py)"]
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**" = ["S101", "S105", "S106"]  # plain assert, fake test credentials
